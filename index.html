@@ -195,9 +195,10 @@
 
   .flight-row {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: baseline;
-    gap: 10px;
+    gap: 4px 10px;
     padding: 9px 0;
     border-top: 1px solid var(--line);
     font-size: 14px;
@@ -214,6 +215,7 @@
     text-align: right;
     outline: none;
     min-width: 40%;
+    flex: 1 1 auto;
     border-bottom: 1px dashed transparent;
   }
 
@@ -470,7 +472,7 @@
         </div>
         <div class="flight-row">
           <span class="flight-label">Departs</span>
-          <span class="flight-value" contenteditable="true" data-field="depart" data-placeholder="Date, time">Oct 8, 5:10 AM</span>
+          <span class="flight-value" contenteditable="true" data-field="depart" data-placeholder="Date, time">Oct 8, 6:15 AM</span>
         </div>
         <div class="flight-row">
           <span class="flight-label">Arrives Toronto</span>
@@ -586,6 +588,14 @@
           <p class="stop-note">Not in the mall &mdash; a short trip from Eaton Centre.</p>
           <div class="stop-links">
             <a href="https://share.google/FniwO7JLC846aNpvQ" target="_blank" rel="noopener">View details</a>
+          </div>
+        </li>
+        <li class="stop">
+          <p class="stop-time">2:00 PM</p>
+          <p class="stop-title">Casa Loma</p>
+          <div class="stop-links">
+            <a href="https://share.google/9W15BR6FVLragqrIo" target="_blank" rel="noopener">Get directions</a>
+            <a href="https://www.ticketweb.ca/events/org/226633?view=calendar&pl=CasaLoma" target="_blank" rel="noopener">Buy tickets</a>
           </div>
         </li>
         <li class="stop">
