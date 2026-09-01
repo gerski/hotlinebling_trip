@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hotline Bling Trip — Toronto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #18131c;
+    --surface: #221c28;
+    --surface-2: #2b2432;
+    --line: rgba(255,255,255,0.09);
+    --text: #f6f1ee;
+    --muted: #b4a9bf;
+    --blue: #4f7bff;
+    --blue-soft: #33305a;
+    --pink: #ff4b96;
+    --pink-soft: #4a2a3c;
+    --orange: #ff8a4c;
+    --orange-soft: #4a3226;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .display { font-family: 'Unbounded', sans-serif; }
+
+  a { color: inherit; }
+
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---------- HERO ---------- */
+
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding: 96px 0 72px;
+    text-align: center;
+  }
+
+  .hero::before,
+  .hero::after,
+  .hero .blob {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    opacity: 0.55;
+    z-index: 0;
+  }
+
+  .hero::before {
+    width: 340px; height: 340px;
+    background: var(--blue);
+    top: -120px; left: -80px;
+  }
+
+  .hero::after {
+    width: 300px; height: 300px;
+    background: var(--pink);
+    top: -60px; right: -100px;
+  }
+
+  .hero .blob {
+    width: 320px; height: 320px;
+    background: var(--orange);
+    bottom: -180px; left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .hero-inner { position: relative; z-index: 1; }
+
+  .kicker {
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    color: var(--muted);
+    margin: 0 0 18px;
+  }
+
+  h1.title {
+    font-size: clamp(40px, 8vw, 64px);
+    font-weight: 800;
+    line-height: 1.05;
+    margin: 0 0 20px;
+    letter-spacing: -0.01em;
+  }
+
+  .hero-meta {
+    font-size: 16px;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .hero-meta .names {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* ---------- SECTION HEADERS ---------- */
+
+  section { padding: 56px 0; }
+  section + section { border-top: 1px solid var(--line); }
+
+  h2.section-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 26px;
+    font-weight: 600;
+    margin: 0 0 8px;
+  }
+
+  .section-sub {
+    color: var(--muted);
+    margin: 0 0 32px;
+    font-size: 15px;
+  }
+
+  /* ---------- TRAVELERS / FLIGHTS ---------- */
+
+  .leg-group + .leg-group {
+    margin-top: 36px;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
+  .tab {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--muted);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 10px 22px;
+    cursor: pointer;
+  }
+
+  .tab[data-color="blue"]   { --accent: var(--blue); }
+  .tab[data-color="pink"]   { --accent: var(--pink); }
+  .tab[data-color="orange"] { --accent: var(--orange); }
+
+  .tab.active {
+    color: var(--text);
+    border-color: var(--accent);
+    background: var(--surface-2);
+  }
+
+  .tab-panel {
+    display: none;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--accent);
+    border-radius: 16px;
+    padding: 24px 22px;
+  }
+
+  .tab-panel.active { display: block; }
+
+  .tab-panel[data-color="blue"]   { --accent: var(--blue); }
+  .tab-panel[data-color="pink"]   { --accent: var(--pink); }
+  .tab-panel[data-color="orange"] { --accent: var(--orange); }
+
+  .leg-block + .leg-block {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+  }
+
+  .leg-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--accent);
+    margin: 0 0 16px;
+  }
+
+  .flight-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 10px;
+    padding: 9px 0;
+    border-top: 1px solid var(--line);
+    font-size: 14px;
+  }
+
+  .flight-row:first-of-type { border-top: none; }
+
+  .flight-label {
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+
+  .flight-value {
+    text-align: right;
+    outline: none;
+    min-width: 40%;
+    border-bottom: 1px dashed transparent;
+  }
+
+  .flight-value:hover,
+  .flight-value:focus {
+    border-bottom: 1px dashed var(--accent);
+  }
+
+  .flight-value:empty::before {
+    content: attr(data-placeholder);
+    color: var(--muted);
+    opacity: 0.6;
+  }
+
+  .edit-hint {
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    margin: 20px 0 0;
+  }
+
+  /* ---------- ITINERARY ---------- */
+
+  .day {
+    margin-bottom: 40px;
+  }
+
+  .day:last-child { margin-bottom: 0; }
+
+  .day-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .day-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .day[data-color="blue"]   { --accent: var(--blue); }
+  .day[data-color="pink"]   { --accent: var(--pink); }
+  .day[data-color="orange"] { --accent: var(--orange); }
+
+  .day-name {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 19px;
+    font-weight: 600;
+  }
+
+  .day-date {
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .stops {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 21px;
+    border-left: 1px solid var(--line);
+  }
+
+  .backup-list {
+    --accent: var(--muted);
+  }
+
+  .stop {
+    position: relative;
+    padding: 0 0 26px 22px;
+  }
+
+  .stop::before {
+    content: "";
+    position: absolute;
+    left: -26px;
+    top: 5px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--surface-2);
+    border: 2px solid var(--accent);
+  }
+
+  .stop:last-child { padding-bottom: 0; }
+
+  .stop-time {
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .stop-title {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0 0 4px;
+  }
+
+  .stop-note {
+    font-size: 14px;
+    color: var(--muted);
+    margin: 0 0 4px;
+  }
+
+  .stop-meta {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 0 0 10px;
+  }
+
+  .stop-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .stop-links a {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+  }
+
+  .stop-links a:hover { border-color: var(--accent); }
+
+  /* ---------- FOOTER ---------- */
+
+  footer {
+    padding: 40px 0 56px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+
+  @media (max-width: 640px) {
+    .travelers { grid-template-columns: 1fr; }
+    .hero { padding: 72px 0 56px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="blob"></div>
+  <div class="wrap hero-inner">
+    <p class="kicker">A girls trip · Toronto, Ontario</p>
+    <h1 class="title display">Hotline Bling Trip</h1>
+    <p class="hero-meta">October 8&ndash;10 &middot; <span class="names">Samantha, Shanna &amp; Ingrid</span></p>
+  </div>
+</header>
+
+<main>
+
+  <section class="wrap" aria-labelledby="flights-title">
+    <h2 class="section-title" id="flights-title">Flights</h2>
+    <p class="section-sub">Tap any field to fill in flight details &mdash; it saves right on this page.</p>
+
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-color="blue" data-tab="samantha" role="tab" aria-selected="true">Samantha</button>
+      <button class="tab" data-color="pink" data-tab="shanna" role="tab" aria-selected="false">Shanna</button>
+      <button class="tab" data-color="orange" data-tab="ingrid" role="tab" aria-selected="false">Ingrid</button>
+    </div>
+
+    <div class="tab-panel active" data-color="blue" data-panel="samantha" role="tabpanel">
+      <div class="leg-block" data-leg="to">
+        <h3 class="leg-title">Flying in &mdash; Thursday, October 8</h3>
+        <div class="flight-row">
+          <span class="flight-label">Leaving from</span>
+          <span class="flight-value" contenteditable="true" data-field="from" data-placeholder="City">NYC (LGA)</span>
+        </div>
+        <div class="flight-row">
+          <span class="flight-label">Departs</span>
+          <span class="flight-value" contenteditable="true" data-field="depart" data-placeholder="Date, time">Oct 8, 7:25 AM</span>
+        </div>
+        <div class="flight-row">
+          <span class="flight-label">Arrives Toronto</span>
+          <span class="flight-value" contenteditable="true" data-field="arrive" data-placeholder="Time">8:56 AM</span>
+        </div>
+        <div class="flight-row">
+          <span class="flight-label">Flight #</span>
+          <span class="flight-value" contenteditable="true" data-field="flightNum" data-placeholder="e.g. AC123"></span>
+        </div>
+      </div>
+      <div class="leg-block" data-leg="from">
+        <h3 class="leg-title">Flying home &mdash; Sunday, October 11</h3>
+        <div class="flight-row">
+          <span class="flight-label">Leaving Toronto</span>
+          <span class="flight-value" contenteditable="true" data-field="depart" data-placeholder="Date, time">Oct 11, 6:00 AM</span>
+        </div>
+        <div class="flight-row">
+          <span class="flight-label">Arrives</span>
+          <span class="flight-value" contenteditable="true" data-field="arrive" data-placeholder="City, time">LGA, 7:36 AM</span>
+        </div>
+        <div class="flight-row">
+          <span class="flight-label">Flight #</span>
+          <span class="flight-value" contenteditable="true" data-field="flightNum" data-placeholder="e.g. AC123"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-panel" data-color="pink" data-panel="shanna" role="tabpanel">
+      <div class="leg-block" data-leg="to">
+        <h3 class="leg-title">Flying in &mdash; Thursday, October 8</h3>
+        <div class="flight-row">
+          <span class="flight-label">Leaving from</span>
+          <span class="flight-value" contenteditable="true" data-field="from" data-placeholder="City">ATL</span>
+        </div>
+        <div class="flight-row">
+          <span class="flight-label">Departs</span>
+          <span class="flight-value" contenteditable="true" data-field="depart" data-placeholder="Date, time">Oct 8, 6:15 AM &amp; 8:05 AM</span>
+        </div>
+        <div class="flight-row">
+          <span class="flight-label">Arrives Toronto</span>
+          <span class="flight-value" contenteditable="true" data-field="arrive" data-placeholder="Time">8:41 AM &amp; 10:23 AM</span>
+        </div>
+        <div class="flight-row">
+          <span class="flight-label">Flight #</span>
+          <span class="flight-value" contenteditable="true" data-field="flightNum" data-placeholder="e.g. AC123"></span>
+        </div>
+      </div>
+      <div class="leg-block" data-leg="from">
+        <h3 class="leg-title">Flying home &mdash; Sunday, October 11</h3>
+        <div class="flight-row">
+          <span class="flight-label">Leaving Toronto</span>
+          <span class="flight-value" contenteditable="true" data-field="depart" data-placeholder="Date, time">Oct 11, 6:15 AM</span>
+        </div>
+        <div class="flight-row">
+          <span class="flight-label">Arrives</span>
+          <span class="flight-value" contenteditable="true" data-field="arrive" data-placeholder="City, time">ATL, 10:23 AM</span>
+        </div>
+        <div class="flight-row">
+          <span class="flight-label">Flight #</span>
+          <span class="flight-value" contenteditable="true" data-field="flightNum" data-placeholder="e.g. AC123"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-panel" data-color="orange" data-panel="ingrid" role="tabpanel">
+      <div class="leg-block" data-leg="to">
+        <h3 class="leg-title">Flying in &mdash; Thursday, October 8</h3>
+        <div class="flight-row">
+          <span class="flight-label">Leaving from</span>
+          <span class="flight-value" contenteditable="true" data-field="from" data-placeholder="City">Jacksonville</span>
+        </div>
+        <div class="flight-row">
+          <span class="flight-label">Departs</span>
+          <span class="flight-value" contenteditable="true" data-field="depart" data-placeholder="Date, time">Oct 8, 6:15 AM</span>
+        </div>
+        <div class="flight-row">
+          <span class="flight-label">Arrives Toronto</span>
+          <span class="flight-value" contenteditable="true" data-field="arrive" data-placeholder="Time">10:23 AM</span>
+        </div>
+        <div class="flight-row">
+          <span class="flight-label">Flight #</span>
+          <span class="flight-value" contenteditable="true" data-field="flightNum" data-placeholder="e.g. AC123"></span>
+        </div>
+      </div>
+      <div class="leg-block" data-leg="from">
+        <h3 class="leg-title">Flying home &mdash; Sunday, October 11</h3>
+        <div class="flight-row">
+          <span class="flight-label">Leaving Toronto</span>
+          <span class="flight-value" contenteditable="true" data-field="depart" data-placeholder="Date, time">Oct 11, 6:15 AM</span>
+        </div>
+        <div class="flight-row">
+          <span class="flight-label">Arrives</span>
+          <span class="flight-value" contenteditable="true" data-field="arrive" data-placeholder="City, time">TBD</span>
+        </div>
+        <div class="flight-row">
+          <span class="flight-label">Flight #</span>
+          <span class="flight-value" contenteditable="true" data-field="flightNum" data-placeholder="e.g. AC123"></span>
+        </div>
+      </div>
+    </div>
+
+    <p class="edit-hint">Info is stored in this browser only &mdash; it won't sync across phones.</p>
+  </section>
+
+  <section class="wrap" aria-labelledby="itinerary-title">
+    <h2 class="section-title" id="itinerary-title">The itinerary</h2>
+    <p class="section-sub">Three days in the 6ix.</p>
+
+    <div class="day" data-color="blue">
+      <div class="day-head">
+        <span class="day-dot"></span>
+        <span class="day-name display">Day one</span>
+        <span class="day-date">Thursday, October 8</span>
+      </div>
+      <ul class="stops">
+        <li class="stop">
+          <p class="stop-title">Land &amp; get ready</p>
+          <p class="stop-note">Settle in before heading out for lunch.</p>
+        </li>
+        <li class="stop">
+          <p class="stop-time">12:45 PM &middot; reservation</p>
+          <p class="stop-title">Lunch at Chubbys Jamaican Kitchen</p>
+          <p class="stop-meta">20 min walk or 6 min drive</p>
+          <div class="stop-links">
+            <a href="https://www.opentable.ca/r/chubbys-jamaican-kitchen-toronto" target="_blank" rel="noopener">Reserve a table</a>
+            <a href="https://share.google/ouIcyjdYB4GSs4IbD" target="_blank" rel="noopener">Get directions</a>
+          </div>
+        </li>
+        <li class="stop">
+          <p class="stop-time">2:00 PM</p>
+          <p class="stop-title">Graffiti Alley</p>
+          <p class="stop-note">Photos and wandering.</p>
+          <div class="stop-links">
+            <a href="https://maps.app.goo.gl/qgaboYbZEbPV8weq6" target="_blank" rel="noopener">Get directions</a>
+          </div>
+        </li>
+        <li class="stop">
+          <p class="stop-time">3:00 PM</p>
+          <p class="stop-title">Kensington Market</p>
+          <p class="stop-note">Vintage shopping and art.</p>
+          <div class="stop-links">
+            <a href="https://www.destinationtoronto.com/leisure-blog/post/guide-to-kensington-market/" target="_blank" rel="noopener">Read the guide</a>
+            <a href="https://maps.app.goo.gl/ZaFPBgfFBRyfsdfC6" target="_blank" rel="noopener">Get directions</a>
+          </div>
+        </li>
+        <li class="stop">
+          <p class="stop-time">8:00 PM &middot; reservation</p>
+          <p class="stop-title">Dinner at Vinnys</p>
+          <div class="stop-links">
+            <a href="https://www.opentable.ca/booking/restref/availability?lang=en-CA&correlationId=21250d9b-d5ea-4879-845e-b061ff95f21c&restRef=1201888&otSource=Restaurant%20website" target="_blank" rel="noopener">Reserve a table</a>
+            <a href="https://maps.app.goo.gl/9xazyM75ASbBzM8F9" target="_blank" rel="noopener">Get directions</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="day" data-color="pink">
+      <div class="day-head">
+        <span class="day-dot"></span>
+        <span class="day-name display">Day two</span>
+        <span class="day-date">Friday, October 9</span>
+      </div>
+      <ul class="stops">
+        <li class="stop">
+          <p class="stop-time">10:00 AM</p>
+          <p class="stop-title">Breakfast at Susies Toronto Ride &amp; Diner</p>
+          <div class="stop-links">
+            <a href="https://share.google/iOgFEEfomedmkGFSi" target="_blank" rel="noopener">View details</a>
+          </div>
+        </li>
+        <li class="stop">
+          <p class="stop-time">12:00 PM</p>
+          <p class="stop-title">Shopping at Toronto Eaton Centre</p>
+          <div class="stop-links">
+            <a href="https://share.google/O7FLjhJVbPOy6sps" target="_blank" rel="noopener">View details</a>
+          </div>
+        </li>
+        <li class="stop">
+          <p class="stop-title">Lunch: Poulet Rouge</p>
+          <p class="stop-note">Inside Eaton Centre.</p>
+          <div class="stop-links">
+            <a href="https://share.google/EDYw4Y4U2XJkrcFJt" target="_blank" rel="noopener">View details</a>
+          </div>
+        </li>
+        <li class="stop">
+          <p class="stop-title">Or lunch: Nom Nom Nom Poutine</p>
+          <p class="stop-note">Not in the mall &mdash; a short trip from Eaton Centre.</p>
+          <div class="stop-links">
+            <a href="https://share.google/FniwO7JLC846aNpvQ" target="_blank" rel="noopener">View details</a>
+          </div>
+        </li>
+        <li class="stop">
+          <p class="stop-time">7:00 PM &middot; reservation</p>
+          <p class="stop-title">Dinner at Canejo Negro</p>
+          <div class="stop-links">
+            <a href="https://www.opentable.ca/booking/restref/availability?rid=1368433&lang=en-CA&color=1&r3uid=cfe&dark=false&correlationId=8bc55701-0dec-4515-8ba7-a31774472955&restRef=1368433&partySize=2&dateTime=2026-10-09T20%3A00&otSource=Restaurant%20website" target="_blank" rel="noopener">Reserve a table</a>
+            <a href="https://share.google/q2tg5i7HSQ6W1ZCBb" target="_blank" rel="noopener">Get directions</a>
+          </div>
+        </li>
+        <li class="stop">
+          <p class="stop-title">CN Tower &amp; drinks at KOST</p>
+          <p class="stop-meta">Reservation needed</p>
+          <div class="stop-links">
+            <a href="https://share.google/wJRVNXugYc7maehma" target="_blank" rel="noopener">Get directions</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="day" data-color="orange">
+      <div class="day-head">
+        <span class="day-dot"></span>
+        <span class="day-name display">Day three</span>
+        <span class="day-date">Saturday, October 10</span>
+      </div>
+      <ul class="stops">
+        <li class="stop">
+          <p class="stop-time">7:00 AM &middot; optional</p>
+          <p class="stop-title">Breakfast at Evviva Breakfast and Lunch</p>
+          <div class="stop-links">
+            <a href="https://share.google/6GCCzOooRWjzysQk1" target="_blank" rel="noopener">View details</a>
+          </div>
+        </li>
+        <li class="stop">
+          <p class="stop-time">8:30 AM</p>
+          <p class="stop-title">Niagara Falls tour, with transportation</p>
+          <p class="stop-meta">$53 per person</p>
+          <div class="stop-links">
+            <a href="https://www.getyourguide.com/checkout/activity/425139609?skipCart=true" target="_blank" rel="noopener">Book the tour</a>
+          </div>
+        </li>
+        <li class="stop">
+          <p class="stop-time">5:45 PM &middot; departure</p>
+          <p class="stop-title">Train back to Toronto</p>
+          <p class="stop-meta">$26 per person</p>
+          <div class="stop-links">
+            <a href="https://reservia.viarail.ca/en/booking/create/trip/1?type=oneWay&ADT=1&travels=NIAG_TRTO_2026-10-10&hasSsr=NO&useSavedSsr=NO&hasPetOnboard=NO&accessPrivateProducts=false&isQuoteSTN=false&isOnBehalfGroupBooking=false" target="_blank" rel="noopener">Book the train</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+  </section>
+
+  <section class="wrap" aria-labelledby="backup-title">
+    <h2 class="section-title" id="backup-title">Backup &amp; other things to do</h2>
+    <p class="section-sub">Swap this in if plans change or there's time to spare.</p>
+    <ul class="stops backup-list">
+      <li class="stop">
+        <p class="stop-title">Art Gallery of Ontario</p>
+        <div class="stop-links">
+          <a href="https://share.google/nPweC3gfbOEcbFNkl" target="_blank" rel="noopener">Get directions</a>
+          <a href="https://ago.ca/" target="_blank" rel="noopener">Buy tickets</a>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+</main>
+
+<footer>
+  Made for Samantha, Shanna &amp; Ingrid &middot; Made by Kishon &middot; Toronto, October 2026
+</footer>
+
+<script>
+  var STORAGE_KEY = 'hotline-bling-trip-flights';
+
+  function loadFlights() {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+    } catch (e) {
+      return {};
+    }
+  }
+
+  function saveFlights(data) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    } catch (e) {}
+  }
+
+  var data = loadFlights();
+
+  document.querySelectorAll('.tab-panel').forEach(function (panel) {
+    var traveler = panel.getAttribute('data-panel');
+
+    panel.querySelectorAll('.leg-block').forEach(function (block) {
+      var leg = block.getAttribute('data-leg');
+      var storeKey = leg + '_' + traveler;
+      var fields = block.querySelectorAll('.flight-value');
+
+      fields.forEach(function (field) {
+        var key = field.getAttribute('data-field');
+        if (data[storeKey] && data[storeKey][key]) {
+          field.textContent = data[storeKey][key];
+        }
+
+        field.addEventListener('input', function () {
+          data[storeKey] = data[storeKey] || {};
+          data[storeKey][key] = field.textContent.trim();
+          saveFlights(data);
+        });
+      });
+    });
+  });
+
+  document.querySelectorAll('.tab').forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      var target = tab.getAttribute('data-tab');
+
+      document.querySelectorAll('.tab').forEach(function (t) {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      document.querySelectorAll('.tab-panel').forEach(function (p) {
+        p.classList.remove('active');
+      });
+
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+      document.querySelector('.tab-panel[data-panel="' + target + '"]').classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
